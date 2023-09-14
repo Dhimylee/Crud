@@ -46,17 +46,40 @@ class UsuarioDAO {
                 
                 WHERE id = :id";
             $p_sql = Conexao::getConexao()->prepare($sql);
-            $p_sql ->bindValue(":nome",$usuario->getNome());
-            $p_sql -> bindValue(":sobrenome", $usuario->getSobrenome());
-            $p_sql -> bindValue(":idade", $usuario->getIdade());
-            $p_sql -> bindValue(":sexo", $usuario->getSexo());
-            $p_sql -> bindValue(":id", $usuario->getId());
+            $p_sql = bindValue(":nome", $usuario->getNome());
+            $p_sql = bindValue(":sobrenome", $usuario->getSobrenome());
+            $p_sql = bindValue(":idade", $usuario->getIdade());
+            $p_sql = bindValue(":sexo", $usuario->getSexo());
+            $p_sql = bindValue(":id",) $usuario->getId();
 
             return $p_sql->execute();
 
-        } catch (Exception $e) {
+        } catch (Execption $e) {
             print "Erro ao atualizar usuário <br>" . $e . '<br>';
         }
+    }
+
+    public function delete(Usuario $usuario) {
+        try {
+            $sql = "DELETE FROM usuario WHERE id = :id";
+
+            $p_sql = Conexao::getConexao() ->prepare($sql);
+            $p_sql ->bindValue(":id", $usuario->getId());
+            return $p_sql->execute();
+        }catch(Exception $e) {
+            print "Erro ao deletar um usuário <br>".$e.'<br>';
+        }
+    }
+
+    private function listaUsuario($row) {
+        $usuario = new Usuario();
+        $usuario ->setId($row['id']);
+        $usuario ->setNome($row['nome']);
+        $usuario ->setSobrenome($row['sobrenome']);
+        $usuario ->setIdade($row['idade']);
+        $usuario ->setSexo($row['sexo']);
+
+        return $usuario;
     }
 }
 ?>
