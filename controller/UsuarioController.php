@@ -1,7 +1,9 @@
-<?php 
+<?php
+include_once "../conexao/Conexao.php";
+include_once "../model/Usuario.php";
+include_once "../dao/UsuarioDAO.php";
 
 //instanciar as classes
-
 $usuario = new Usuario();
 $usuariodao = new UsuarioDAO();
 
@@ -10,16 +12,42 @@ $usuariodao = new UsuarioDAO();
 $d = filter_input_array(INPUT_POST);
 
 //Se for gravado com sucesso
-if (isset($_POST['cadastrar'])) {
+if(isset($_POST['cadastrar'])){
+
     $usuario->setNome($d['nome']);
     $usuario->setSobrenome($d['sobrenome']);
+    $usuario->setEmail($d['email']);
     $usuario->setIdade($d['idade']);
     $usuario->setSexo($d['sexo']);
 
-    $usuario->create($usuario);
+    $usuariodao->create($usuario);
+
+    header("Location: ../");
 }
-//Se for deletar
-elseif (isset($_GET['del'])) {
+
+//Se a requisição for Editar
+else if(isset($_POST['editar'])){
+
+    $usuario->setId($d['id']);
+    $usuario->setNome($d['nome']);
+    $usuario->setSobrenome($d['sobrenome']);
+    $usuario->setEmail($d['email']);
+    $usuario->setIdade($d['idade']);
+    $usuario->setSexo($d['sexo']);
+
+    $usuariodao->update($usuario);
+
+    header("Location: ../");
+
+}
+
+//Se a requisição for Deletar
+else if(isset($_GET['del'])){
+
     $usuario->setId($_GET['del']);
-    $usuario->delete($usuario);
-?>
+    $usuariodao->delete($usuario);
+
+    header("Location: ../");
+}else{
+    header("Location: ../");
+}

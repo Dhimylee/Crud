@@ -5,6 +5,7 @@ class Usuario{
     private $id;
     private $nome;
     private $sobrenome;
+    private $email;
     private $idade;
     private $sexo;
     
@@ -18,6 +19,10 @@ class Usuario{
 
     function getSobrenome() {
         return $this->sobrenome;
+    }
+
+    function getEmail() {
+        return $this->email;
     }
 
     function getIdade() {
@@ -38,6 +43,10 @@ class Usuario{
 
     function setSobrenome($sobrenome) {
         $this->sobrenome = $sobrenome;
+    }
+
+    function setEmail($email) {
+        $this->email = $email;
     }
 
     function setIdade($idade) {
